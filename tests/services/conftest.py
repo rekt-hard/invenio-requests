@@ -46,12 +46,12 @@ def create_request(users, request_record_input_data, requests_service):
 
 
 @pytest.fixture()
-def submit_request(create_request, requests_service):
+def submit_request(create_request, requests_service, **kwargs):
     """Opened Request Factory fixture."""
 
-    def _submit_request(identity, data=None):
+    def _submit_request(identity, data=None, **kwargs):
         """Create and submit a request."""
-        request = create_request(identity)
+        request = create_request(identity, **kwargs)
         id_ = request.id
         data = data or {
             "payload": {

@@ -9,10 +9,6 @@
 
 """Service tests."""
 
-import pytest
-from invenio_access.permissions import system_identity
-
-from invenio_requests.customizations import RequestType
 from invenio_requests.customizations.event_types import CommentEventType
 from invenio_requests.records.api import RequestEvent, RequestEventFormat
 
