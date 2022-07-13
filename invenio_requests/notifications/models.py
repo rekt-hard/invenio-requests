@@ -10,7 +10,6 @@
 
 from dataclasses import dataclass
 from datetime import datetime
-import json
 from typing import ClassVar
 
     
@@ -34,8 +33,13 @@ class Notification(dict):
         self.update(kwargs)
 
     def dumps(self):
-        # should have a proper dumper defined
-        return json.loads(json.dumps(self.__dict__))
+        # should have a proper dumper defined, to make sure it is serializable for celery
+        d = {k:v for k,v in self.items()}
+        d.update(self.__dict__)
+        return d
+
+    def copy(self):
+        return Notification(**self.dumps())
 
 
 

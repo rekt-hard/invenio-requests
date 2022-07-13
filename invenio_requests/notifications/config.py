@@ -30,30 +30,30 @@ NOTIFICATIONS_DEFAULT_SUBJECT = _("New notification from repository")
 NOTIFICATIONS_NOTIFICATION_POLICY = {
     CommunitySubmissionSubmittedEvent.handling_key: {
         'backends': [
-            'email',
+            EmailNotificationBackend.id,
         ],
     },
     CommunitySubmissionCreatedEvent.handling_key: {
         'backends': [
-            'email',
+            EmailNotificationBackend.id,
             # 'text',
         ],
     },
     CommunitySubmissionDeclinedEvent.handling_key: {
         'backends': [
-            'email',
+            EmailNotificationBackend.id,
             # 'text',
         ],
     },
     CommunitySubmissionDeletedEvent.handling_key: {
         'backends': [
-            'email',
+            EmailNotificationBackend.id,
             # 'text',
         ],
     },
     'comment_created': {
         'backends': [
-            'email',
+            EmailNotificationBackend.id,
             # 'slack',
         ],
         # 'recipients': []

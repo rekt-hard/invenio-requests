@@ -10,7 +10,6 @@
 
 from celery import shared_task
 from flask import current_app
-from invenio_mail.tasks import send_email
 from invenio_requests.notifications.backends.backend import NotificationBackend
 from invenio_requests.notifications.backends.loaders import JinjaTemplateLoaderMixin
 from flask_babelex import gettext as _
@@ -22,6 +21,7 @@ class EmailNotificationBackend(NotificationBackend, JinjaTemplateLoaderMixin):
     @shared_task
     def send_notification(notification):
         """Construct and send email."""
+        from invenio_mail.tasks import send_email
         mail_data = {}
         mail_data["recipients"] = [r["email"] for r in notification["recipients"]]
         mail_data["recipients"] = ["david.eckhard@tugraz.at"]
@@ -36,6 +36,11 @@ class EmailNotificationBackend(NotificationBackend, JinjaTemplateLoaderMixin):
         """Notification will be a deep copy, """
         notification_tpl_html = self.get_template(notification["type"] + ".html")
         notification_tpl_txt = self.get_template(notification["type"] + ".txt")
+
+        # construct UI link of request review for use in template (there are request links for API but none for UI)
+        notification["links"] = {
+            "review": f'{notification.data["community"]["links"]["self_html"]}/requests/{notification.data["request"]["id"]}',
+        }
 
         notification["html_body"] = notification_tpl_html.render(notification=notification)
         notification["text_body"] = notification_tpl_txt.render(notification=notification)

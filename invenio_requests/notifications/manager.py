@@ -11,7 +11,6 @@
 
 from flask import current_app
 from invenio_requests.notifications.errors import NotificationBackendAlreadyRegisteredError, NotificationBackendNotFoundError, NotificationTypeNotFoundError
-from invenio_requests.notifications.models import Notification
 
 
 class NotificationManager:
@@ -24,40 +23,45 @@ class NotificationManager:
         self._validate_policy()
 
     def _init_backends(self):
+        """Initialize specified backends."""
         for id, backend_cls in self._config.backends.items():
             backend_cls(self)
 
+    def _backend_exists(self, backend_id):
+        """Check if backend is registered."""
+        return backend_id in self._backends
+
     def _validate_policy(self):
+        """Validate policy to make sure no backend is used without being specified."""
         for event_type, event_policy in self._notification_policy.items():
             backend_ids = event_policy.get("backends", [])
             for backend_id in backend_ids:
-                if backend_id not in self._backends:
+                if not self._backend_exists(backend_id):
                     raise NotificationBackendNotFoundError(backend_id, type_=event_type)
 
+                
     def _dispatch_notification(self, notification, backend, **kwargs):
+        """Extend notification and start task for sending."""
         try:
-            extended_notification = backend.extend_notification(notification.dumps(), **kwargs)
+            extended_notification = backend.extend_notification(notification.copy(), **kwargs)
             
             # These do not always get logged
             backend.send_notification.apply_async(
                 args=[extended_notification],
             )
-            backend.send_notification.delay(
-                extended_notification,
-            )
-            
-            # This will always get logged
-            backend.send_notification(extended_notification)
+
         except Exception as e:
             current_app.logger.warning(e)
             raise e
 
 
     def broadcast(self, notification, **kwargs):
+        """Broadcast notification to backends according to event policy."""
         event_policy = self._notification_policy.get(notification.type)
         if event_policy is None:
             current_app.logger.warning(NotificationTypeNotFoundError(notification.type))
             return
+
         for backend_id in event_policy.get("backends", []):
             backend = self._backends.get(backend_id)
             if backend is None:
@@ -80,9 +84,31 @@ class NotificationManager:
         self._dispatch_notification(notification, backend, **kwargs)
 
     def register(self, backend):
-        if self._backends.get(backend.id) is not None:
+        """Register backend in manager."""
+        if self._backend_exists(backend.id):
             raise NotificationBackendAlreadyRegisteredError(backend.id)
         self._backends[backend.id] = backend
 
     def deregister(self, backend):
+        """Deregister backend in manager."""
         del self._backends[backend.id]
+
+
+    def register_event(self, event, event_config):
+        """Register event with config.
+        
+        Other modules should be able to register their own events and specify a policy.
+        """
+        event_name = event.handling_key
+        if self._notification_policy.has_key(event_name):
+            return
+
+        policy = {
+            "backends": event_config.get("backends", []),
+        }
+
+        for backend_id in policy.get("backends"):
+            if not self._backend_exists(backend_id):
+                raise NotificationBackendNotFoundError(backend_id)
+
+        self._notification_policy[event_name] = policy

@@ -1,3 +1,7 @@
 <p>{{ _('Submission created') }}</p>
 
-<p><a href="{{ notification.data }}">{{ _('View submission') }}</a></p>
+<p>
+    <a href="{{ notification['links']['review'] }}">{{ _('View submission') }}</a>
+</p>
+
+<p> data: {{ notification.data }}</a></p>
