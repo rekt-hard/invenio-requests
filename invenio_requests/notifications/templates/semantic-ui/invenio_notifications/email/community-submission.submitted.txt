@@ -1,3 +1,3 @@
-<p>{{ _('Submission submitted') }}</p>
+{{ _('New community submission') }}
 
-<p><a href="{{ notification.data }}">{{ _('View submission') }}</a></p>
+{{ _('View submission') }}: {{ notification.data['request']['links']['self_html'] }}

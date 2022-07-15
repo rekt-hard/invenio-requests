@@ -24,7 +24,6 @@ class EmailNotificationBackend(NotificationBackend, JinjaTemplateLoaderMixin):
         from invenio_mail.tasks import send_email
         mail_data = {}
         mail_data["recipients"] = [r["email"] for r in notification["recipients"]]
-        mail_data["recipients"] = ["david.eckhard@tugraz.at"]
         mail_data["html"] = notification["html_body"]
         mail_data["body"] = notification["text_body"]
         mail_data["subject"] = notification["subject"]
@@ -39,7 +38,7 @@ class EmailNotificationBackend(NotificationBackend, JinjaTemplateLoaderMixin):
 
         # construct UI link of request review for use in template (there are request links for API but none for UI)
         notification["links"] = {
-            "review": f'{notification.data["community"]["links"]["self_html"]}/requests/{notification.data["request"]["id"]}',
+            "self_html", f'{notification.data["community"]["links"]["requests"]}/{notification.data["request"]["id"]}',
         }
 
         notification["html_body"] = notification_tpl_html.render(notification=notification)

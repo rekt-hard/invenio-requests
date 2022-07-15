@@ -1,7 +1,7 @@
 <p>{{ _('New community submission') }}</p>
 
 <p>
-    <a href="{{ notification['links']['review'] }}">{{ _('View submission') }}</a>
+    <a href="{{ notification.data['request']['links']['self_html'] }}">{{ _('View submission') }}</a>
 </p>
 
 <p> data: {{ notification.data }}</a></p>

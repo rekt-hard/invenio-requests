@@ -10,7 +10,7 @@
 
 from flask_babelex import gettext as _
 from invenio_requests.notifications.backends.email.backend import EmailNotificationBackend
-from invenio_requests.notifications.models import CommunitySubmissionCreatedEvent, CommunitySubmissionDeclinedEvent, CommunitySubmissionDeletedEvent, CommunitySubmissionEvent, CommunitySubmissionSubmittedEvent
+from invenio_requests.notifications.models import CommunityInvitationAcceptedEvent, CommunityInvitationCreatedEvent, CommunityInvitationDeclinedEvent, CommunitySubmissionCreatedEvent, CommunitySubmissionDeclinedEvent, CommunitySubmissionDeletedEvent, CommunitySubmissionEvent, CommunitySubmissionSubmittedEvent
 from invenio_requests.services.configurator import ConfiguratorMixin, FromConfig
 
 
@@ -60,5 +60,20 @@ NOTIFICATIONS_NOTIFICATION_POLICY = {
     },
     'invitation_expired': {
         'backends': []
+    },
+    CommunityInvitationCreatedEvent.handling_key: {
+        'backends': [
+            EmailNotificationBackend.id,
+        ],
+    },
+    CommunityInvitationAcceptedEvent: {
+        'backends': [
+            EmailNotificationBackend.id,
+        ],
+    },
+    CommunityInvitationDeclinedEvent: {
+        'backends': [
+            EmailNotificationBackend.id,
+        ],
     },
 }

@@ -69,14 +69,12 @@ class CommunitySubmissionSubmittedEvent(CommunitySubmissionEvent):
     action: ClassVar[str] = "submitted"
     handling_key: ClassVar[str] = f"{CommunitySubmissionEvent.type}.{action}"
 
-
 @dataclass
 class CommunitySubmissionDeletedEvent(CommunitySubmissionEvent):
     """Record related events."""
 
     action: ClassVar[str] = "deleted"
     handling_key: ClassVar[str] = f"{CommunitySubmissionEvent.type}.{action}"
-
 
 @dataclass
 class CommunitySubmissionCreatedEvent(CommunitySubmissionEvent):
@@ -93,3 +91,31 @@ class CommunitySubmissionDeclinedEvent(CommunitySubmissionEvent):
     action: ClassVar[str] = "declined"
     handling_key: ClassVar[str] = f"{CommunitySubmissionEvent.type}.{action}"
 
+@dataclass
+class CommunityInvitationEvent(Event):
+    """Community related events."""
+
+    recid: str
+    type: ClassVar[str] = "community-invitation"
+    handling_key: ClassVar[str] = "community-invitation"
+
+@dataclass
+class CommunityInvitationCreatedEvent(CommunityInvitationEvent):
+    """Record related events."""
+
+    action: ClassVar[str] = "created"
+    handling_key: ClassVar[str] = f"{CommunityInvitationEvent.type}.{action}"
+
+@dataclass
+class CommunityInvitationAcceptedEvent(CommunityInvitationEvent):
+    """Record related events."""
+
+    action: ClassVar[str] = "accepted"
+    handling_key: ClassVar[str] = f"{CommunityInvitationEvent.type}.{action}"
+
+@dataclass
+class CommunityInvitationDeclinedEvent(CommunityInvitationEvent):
+    """Record related events."""
+
+    action: ClassVar[str] = "declined"
+    handling_key: ClassVar[str] = f"{CommunityInvitationEvent.type}.{action}"
