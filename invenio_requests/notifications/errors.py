@@ -14,17 +14,6 @@ from flask_babelex import gettext as _
 class NotificationError(Exception):
     """General notification."""
 
-    def __init__(self, description, *args: object):
-        """Constructor."""
-        self.description = description
-        super().__init__(*args)
-
-    def __str__(self):
-        """Return str(self)."""
-        return self.description
-    
-
-
 class NotificationTypeNotFoundError(NotificationError):
     """The provided event type is not configured."""
 
@@ -34,9 +23,7 @@ class NotificationTypeNotFoundError(NotificationError):
         :param type: The name of the event type.
         """
         super().__init__(
-            description=_(
-                "Notification type `{}` not configured.".format(type)
-            )
+            _("Notification type `{}` not configured.".format(type))
         )
 
 class NotificationBackendNotFoundError(NotificationError):
@@ -50,8 +37,9 @@ class NotificationBackendNotFoundError(NotificationError):
         """
         type_text = _(" for type `{}` ").format(type_) if type_ else ""
         super().__init__(
-            description=_(
-                "Notification backend `{}`{}is not registered.".format(backend_id, type_text)
+            _(
+                "Notification backend `{}`{}is not registered."
+                .format(backend_id, type_text)
             )
         )
 
@@ -64,7 +52,8 @@ class NotificationBackendAlreadyRegisteredError(NotificationError):
         :param event_type: The id of the backend.
         """
         super().__init__(
-            description=_(
-                "Notification backend `{}` already registered.".format(backend_id)
+            _(
+                "Notification backend `{}` already registered."
+                .format(backend_id)
             )
         )

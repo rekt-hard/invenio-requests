@@ -16,10 +16,6 @@ class NotificationBackend(ABC):
     id = None
     """Unique id of the backend."""
 
-    def __init__(self, notification_manager):
-        self.notification_manager = notification_manager
-        self.notification_manager.register(self)
-    
     @abstractmethod
     @shared_task
     def send_notification(notification):

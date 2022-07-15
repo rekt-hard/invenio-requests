@@ -19,19 +19,12 @@ class NotificationManager:
         self._config = config
         self._backends = {}
         self._notification_policy = config.notification_policy
-        self._init_backends()
-        self._validate_policy()
-
-    def _init_backends(self):
-        """Initialize specified backends."""
-        for id, backend_cls in self._config.backends.items():
-            backend_cls(self)
 
     def _backend_exists(self, backend_id):
         """Check if backend is registered."""
         return backend_id in self._backends
 
-    def _validate_policy(self):
+    def validate_policy(self):
         """Validate policy to make sure no backend is used without being specified."""
         for event_type, event_policy in self._notification_policy.items():
             backend_ids = event_policy.get("backends", [])
@@ -47,7 +40,7 @@ class NotificationManager:
             
             # These do not always get logged
             backend.send_notification.apply_async(
-                args=[extended_notification],
+                args=[extended_notification.dumps()],
             )
 
         except Exception as e:

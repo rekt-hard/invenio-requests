@@ -14,5 +14,5 @@ from werkzeug.local import LocalProxy
 current_notifications = LocalProxy(lambda: current_app.extensions["invenio-notifications"])
 """Proxy for the instantiated notifications extension."""
 
-current_notifications_manager = LocalProxy(lambda: current_notifications.notification_manager)
+current_notifications_manager = LocalProxy(lambda: current_notifications.manager)
 """Proxy for the instantiated notifications manager."""

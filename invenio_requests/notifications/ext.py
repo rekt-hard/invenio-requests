@@ -19,7 +19,7 @@ class InvenioNotifications:
 
     def __init__(self, app=None):
         """Extension initialization."""
-        self.notification_manager = None
+        self.manager = None
         if app:
             self.init_app(app)
 
@@ -31,9 +31,14 @@ class InvenioNotifications:
 
     def init_manager(self, app):
         cfg = NotificationConfig.build(app)
-        self.notification_manager = NotificationManager(
+        manager = NotificationManager(
             config=cfg,
         )
+        for id, backend_cls in cfg.backends.items():
+            manager.register(backend_cls())
+        
+        manager.validate_policy()
+        self.manager = manager
 
     def init_config(self, app):
         """Initialize configuration."""

@@ -10,13 +10,13 @@
 
 from flask_babelex import gettext as _
 from invenio_requests.notifications.backends.email.backend import EmailNotificationBackend
-from invenio_requests.notifications.models import CommunityInvitationAcceptedEvent, CommunityInvitationCreatedEvent, CommunityInvitationDeclinedEvent, CommunitySubmissionCreatedEvent, CommunitySubmissionDeclinedEvent, CommunitySubmissionDeletedEvent, CommunitySubmissionEvent, CommunitySubmissionSubmittedEvent
+from invenio_requests.notifications.events import CommunityInvitationAcceptedEvent, CommunityInvitationCreatedEvent, CommunityInvitationDeclinedEvent, CommunitySubmissionCreatedEvent, CommunitySubmissionDeclinedEvent, CommunitySubmissionDeletedEvent, CommunitySubmissionSubmittedEvent
 from invenio_requests.services.configurator import ConfiguratorMixin, FromConfig
 
 
 class NotificationConfig(ConfiguratorMixin):
     backends = FromConfig("NOTIFICATIONS_BACKENDS", {})
-    notification_policy = FromConfig("NOTIFICATIONS_NOTIFICATION_POLICY", {})
+    notification_policy = FromConfig("NOTIFICATIONS_POLICY", {})
 
 
 # NOTIFICATIONS_CONFIG = NotificationConfig
@@ -27,7 +27,7 @@ NOTIFICATIONS_BACKENDS = {
 
 NOTIFICATIONS_DEFAULT_SUBJECT = _("New notification from repository")
 
-NOTIFICATIONS_NOTIFICATION_POLICY = {
+NOTIFICATIONS_POLICY = {
     CommunitySubmissionSubmittedEvent.handling_key: {
         'backends': [
             EmailNotificationBackend.id,
@@ -66,12 +66,12 @@ NOTIFICATIONS_NOTIFICATION_POLICY = {
             EmailNotificationBackend.id,
         ],
     },
-    CommunityInvitationAcceptedEvent: {
+    CommunityInvitationAcceptedEvent.handling_key: {
         'backends': [
             EmailNotificationBackend.id,
         ],
     },
-    CommunityInvitationDeclinedEvent: {
+    CommunityInvitationDeclinedEvent.handling_key: {
         'backends': [
             EmailNotificationBackend.id,
         ],

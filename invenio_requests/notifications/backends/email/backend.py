@@ -33,16 +33,11 @@ class EmailNotificationBackend(NotificationBackend, JinjaTemplateLoaderMixin):
 
     def extend_notification(self, notification):
         """Notification will be a deep copy, """
-        notification_tpl_html = self.get_template(notification["type"] + ".html")
-        notification_tpl_txt = self.get_template(notification["type"] + ".txt")
+        tpl_html = self.get_template(notification["type"] + ".html")
+        tpl_txt = self.get_template(notification["type"] + ".txt")
 
-        # construct UI link of request review for use in template (there are request links for API but none for UI)
-        notification["links"] = {
-            "self_html", f'{notification.data["community"]["links"]["requests"]}/{notification.data["request"]["id"]}',
-        }
-
-        notification["html_body"] = notification_tpl_html.render(notification=notification)
-        notification["text_body"] = notification_tpl_txt.render(notification=notification)
+        notification["html_body"] = tpl_html.render(notification=notification)
+        notification["text_body"] = tpl_txt.render(notification=notification)
         notification["subject"] = notification.get("subject", current_app.config["NOTIFICATIONS_DEFAULT_SUBJECT"])
         notification["sender"] = current_app.config["SECURITY_EMAIL_SENDER"]
         return notification
