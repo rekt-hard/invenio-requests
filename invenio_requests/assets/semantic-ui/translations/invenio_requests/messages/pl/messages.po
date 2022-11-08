@@ -1,14 +1,14 @@
 # 
 # Translators:
-# Tibor Simko <tibor.simko@cern.ch>, 2022
 # Karolina Przerwa, 2022
+# Tibor Simko <tibor.simko@cern.ch>, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2022-02-18T15:20:00.475Z\n"
+"POT-Creation-Date: 2022-10-12T08:08:24.546Z\n"
 "PO-Revision-Date: 2022-02-18 11:12+0000\n"
-"Last-Translator: Karolina Przerwa, 2022\n"
+"Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2022\n"
 "Language-Team: Polish (https://www.transifex.com/inveniosoftware/teams/23537/pl/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,12 +28,6 @@ msgstr "Potwierdź"
 msgid "Cancel"
 msgstr "Anuluj"
 
-msgid "Comment on your {{action}} request action (optional)."
-msgstr ""
-
-msgid "{{action}}"
-msgstr ""
-
 msgid "{{action}} request"
 msgstr ""
 
@@ -47,7 +41,7 @@ msgid "Expires"
 msgstr "Wygasa"
 
 msgid "Comment"
-msgstr "Komentarz"
+msgstr "Skomentuj"
 
 msgid "commented"
 msgstr "skomentował(a)"
@@ -67,5 +61,71 @@ msgstr "usunięty"
 msgid "Are you sure you want to delete this comment?"
 msgstr "Czy na pewno chcesz usunąć ten komentarz?"
 
-msgid "Requestor"
+msgid "Decline"
+msgstr ""
+
+msgid "Accept and publish"
+msgstr ""
+
+msgid "Accept"
+msgstr ""
+
+msgid "Add comment (optional)"
+msgstr ""
+
+msgid "Receiver"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "New submission"
+msgstr ""
+
+msgid "New invitation"
+msgstr ""
+
+msgid "Cancel request"
+msgstr ""
+
+msgid "Accept request"
+msgstr ""
+
+msgid "accepted this request"
+msgstr ""
+
+msgid "declined this request"
+msgstr ""
+
+msgid "this request expired"
+msgstr ""
+
+msgid "cancelled this request"
+msgstr ""
+
+msgid "unknown event"
+msgstr ""
+
+msgid "Decline request"
+msgstr ""
+
+msgid "Submitted"
+msgstr ""
+
+msgid "Accepted"
+msgstr ""
+
+msgid "Cancelled"
+msgstr "Anulowane"
+
+msgid "Declined"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "deleted a comment"
 msgstr ""

@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2022-05-25T12:27:59.326Z\n"
+"POT-Creation-Date: 2022-10-12T08:08:24.546Z\n"
 "PO-Revision-Date: 2022-02-18 11:12+0000\n"
 "Last-Translator: chriz_uniba <christina.zeller@uni-bamberg.de>, 2022\n"
 "Language-Team: German (https://www.transifex.com/inveniosoftware/teams/23537/de/)\n"
@@ -129,3 +129,6 @@ msgstr "Abgelaufen"
 
 msgid "Creator"
 msgstr "ErstellerIn"
+
+msgid "deleted a comment"
+msgstr "hat einen Kommentar gelöscht"
