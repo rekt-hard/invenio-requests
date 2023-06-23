@@ -40,7 +40,16 @@ class RequestEventsService(RecordService):
         return [EntityResolverExpandableField("created_by")]
 
     @unit_of_work()
-    def create(self, identity, request_id, data, event_type, uow=None, expand=False):
+    def create(
+        self,
+        identity,
+        request_id,
+        data,
+        event_type,
+        uow=None,
+        expand=False,
+        notify=True,
+    ):
         """Create a request event.
 
         :param request_id: Identifier of the request (data-layer id).
