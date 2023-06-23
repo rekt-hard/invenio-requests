@@ -1,0 +1,44 @@
+{% set invenio_request = notification.context.request %}
+{% set invenio_request_event = notification.context.request_event %}
+
+{% set event_creator_name = invenio_request_event.created_by.username %}
+{% set request_id = invenio_request.id %}
+{% set request_event_content = invenio_request_event.payload.content | safe %}
+{% set request_title = invenio_request.title | safe %}
+
+{# TODO: use request.links.self_html when issue issue is resolved: https://github.com/inveniosoftware/invenio-rdm-records/issues/1327 #}
+{% set request_link = "{ui}/me/requests/{id}".format(
+    ui=config.SITE_UI_URL, id=request_id
+    )
+%}
+
+{%- block subject -%}
+{{ _("New comment on '{request_title}'").format(request_title=request_title) }}
+{%- endblock subject -%}
+
+{%- block html_body -%}
+<p>
+    {{ _("'{user_name}' commented on '{request_title}'").format(user_name=event_creator_name, request_title=request_title) }}.
+</p>
+{{ request_event_content }}
+
+<a href="{{ request_link }}" class="button"> {{ _("Check out the request") }}</a>
+{%- endblock html_body %}
+
+{%- block plain_body -%}
+{{ _("'{user_name}' commented on '{request_title}'").format(user_name=event_creator_name, request_title=request_title) }}.
+
+{{ request_event_content }}
+
+{{ _("Check out the request: {request_link}").format(request_link=request_link) }}
+
+{%- endblock plain_body %}
+
+{# Markdown for Slack/Mattermost/chat #}
+{%- block md_body -%}
+{{ _("*{user_name}* commented on *{request_title}*").format(user_name=event_creator_name, request_title=request_title) }}.
+
+{{ request_event_content }}
+
+[{{_("Check out the request")}}]({{request_link}})
+{%- endblock md_body %}

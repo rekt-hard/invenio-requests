@@ -12,6 +12,7 @@
 
 from invenio_access.permissions import system_identity, system_user_id
 from invenio_i18n import _
+from invenio_notifications.services.uow import NotificationOp
 from invenio_records_resources.services import RecordService, ServiceSchemaWrapper
 from invenio_records_resources.services.base.links import LinksTemplate
 from invenio_records_resources.services.uow import (
@@ -23,6 +24,9 @@ from invenio_search.engine import dsl
 
 from invenio_requests.customizations import CommentEventType
 from invenio_requests.customizations.event_types import LogEventType
+from invenio_requests.notifications.builders import (
+    CommentRequestEventCreateNotificationBuilder,
+)
 from invenio_requests.records.api import RequestEventFormat
 from invenio_requests.services.results import EntityResolverExpandableField
 
@@ -77,6 +81,13 @@ class RequestEventsService(RecordService):
         event.created_by = self._get_creator(identity)
         # Persist record (DB and index)
         uow.register(RecordCommitOp(event, indexer=self.indexer))
+
+        if notify and event_type is CommentEventType:
+            uow.register(
+                NotificationOp(
+                    CommentRequestEventCreateNotificationBuilder.build(request, event)
+                )
+            )
 
         return self.result_item(
             self,
