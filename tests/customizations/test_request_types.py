@@ -135,14 +135,14 @@ def test_customized_reference_types(customized_app):
     assert errors
 
 
-def test_customized_request_actions(customized_app, users):
+def test_customized_request_actions(customized_app, user1):
     """Test if the action customization mechanism works."""
     service = customized_app.extensions["invenio-requests"].requests_service
     request = service.create(
         system_identity,
         {},
         CustomizedReferenceRequestType,
-        receiver=users[0],
+        receiver=user1.user,
         creator=None,
     )
 

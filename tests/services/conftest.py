@@ -29,13 +29,13 @@ def request_events_service(app):
 
 
 @pytest.fixture()
-def create_request(users, request_record_input_data, requests_service):
+def create_request(user2, request_record_input_data, requests_service):
     """Request Factory fixture."""
 
     def _create_request(identity, input_data=None, receiver=None, **kwargs):
         """Create a request."""
         input_data = input_data or request_record_input_data
-        receiver = receiver or users[1]
+        receiver = receiver or user2.user
         # Need to use the service to get the id
         item = requests_service.create(
             identity, input_data, RequestType, receiver=receiver, **kwargs

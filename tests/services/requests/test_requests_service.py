@@ -124,12 +124,12 @@ def test_search_user_requests(
     app,
     identity_simple,
     identity_simple_2,
-    users,
+    user1,
     submit_request,
     requests_service,
     create_request,
 ):
-    request = submit_request(identity_simple, receiver=users[2])
+    request = submit_request(identity_simple, receiver=user1.user)
     request_id = request.id
     Request.index.refresh()
 
