@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.7.0 (2023-07-21)
+
+- requests: add notification flag to the service
+
 Version 2.6.1 (2023-07-13)
 
 - ui: improve styling in request items
