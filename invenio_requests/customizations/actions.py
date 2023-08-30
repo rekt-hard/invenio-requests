@@ -7,6 +7,12 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Base class for customizable actions on requests."""
+from invenio_notifications.services.uow import NotificationOp
+
+from invenio_requests.notifications.builders import (
+    RequestActionAcceptNotificationBuilder,
+)
+
 from ..errors import NoSuchActionError
 from ..proxies import current_events_service
 from .event_types import LogEventType
@@ -127,6 +133,19 @@ class AcceptAction(RequestAction):
 
     status_from = ["submitted"]
     status_to = "accepted"
+
+    def execute(self, identity, uow):
+        """Execute the request action.
+
+        :param identity: The identity of the executor.
+        :param data: The passed input to the action.
+        """
+        super().execute(identity=identity, uow=uow)
+        uow.register(
+            NotificationOp(
+                RequestActionAcceptNotificationBuilder.build(request=self.request)
+            )
+        )
 
 
 class DeclineAction(RequestAction):

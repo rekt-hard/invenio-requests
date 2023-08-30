@@ -12,6 +12,7 @@ from invenio_notifications.registry import EntityResolverRegistry
 from invenio_notifications.services.builders import NotificationBuilder
 from invenio_notifications.services.generators import EntityResolve, UserEmailBackend
 from invenio_users_resources.notifications.filters import UserPreferencesRecipientFilter
+from invenio_users_resources.notifications.generators import UserRecipient
 
 from invenio_requests.notifications.filters import UserRecipientFilter
 
@@ -55,3 +56,43 @@ class CommentRequestEventCreateNotificationBuilder(NotificationBuilder):
     recipient_backends = [
         UserEmailBackend(),
     ]
+
+
+class RequestActionNotificationBuilder(NotificationBuilder):
+    """Notification builder for request actions."""
+
+    type = "request-action"
+
+    @classmethod
+    def build(cls, request):
+        """Build notification with context."""
+        return Notification(
+            type=cls.type,
+            context={
+                "request": EntityResolverRegistry.reference_entity(request),
+            },
+        )
+
+    context = [
+        EntityResolve(key="request"),
+        EntityResolve(key="request.created_by"),
+        EntityResolve(key="request.receiver"),
+    ]
+
+    recipients = [
+        UserRecipient("request.created_by"),
+    ]
+
+    recipient_filters = [
+        UserPreferencesRecipientFilter(),
+    ]
+
+    recipient_backends = [
+        UserEmailBackend(),
+    ]
+
+
+class RequestActionAcceptNotificationBuilder(RequestActionNotificationBuilder):
+    """Notification builder for request actions."""
+
+    type = f"{RequestActionNotificationBuilder.type}.accept"
