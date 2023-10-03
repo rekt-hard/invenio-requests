@@ -26,8 +26,11 @@ class RequestParticipantsRecipient(RecipientGenerator):
 
     def _get_user_id(self, request_field):
         """Checking if entities are users for (non)-expanded requests."""
+        if not isinstance(request_field, dict):
+            # e.g. resolved email entity
+            return None
+
         # non expanded looks like {"user": "1"}
-        # TODO handle email entity
         non_expanded_id = request_field.get("user")
         # expanded looks like {"id": "1", "profile": {"full_name": "A user"}, ... }
         expanded_id = request_field["id"] if request_field.get("profile") else None

@@ -23,6 +23,10 @@ class UserRecipientFilter(RecipientFilter):
     def __call__(self, notification, recipients):
         """Filter recipients."""
         user = dict_lookup(notification.context, self._key)
+        if not isinstance(user, dict):
+            # e.g. resolved email entity
+            return recipients
+
         # lookup (non) expanded user field
         user_id = user.get("user") or user.get("id")
 

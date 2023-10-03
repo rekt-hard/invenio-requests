@@ -10,8 +10,13 @@
 from invenio_notifications.models import Notification
 from invenio_notifications.registry import EntityResolverRegistry
 from invenio_notifications.services.builders import NotificationBuilder
+from invenio_notifications.services.filters import KeyRecipientFilter
 from invenio_notifications.services.generators import EntityResolve, UserEmailBackend
 from invenio_users_resources.notifications.filters import UserPreferencesRecipientFilter
+from invenio_users_resources.notifications.generators import (
+    EmailRecipient,
+    IfEmailRecipient,
+)
 
 from invenio_requests.notifications.filters import UserRecipientFilter
 
@@ -44,9 +49,16 @@ class CommentRequestEventCreateNotificationBuilder(NotificationBuilder):
 
     recipients = [
         RequestParticipantsRecipient(key="request"),
+        IfEmailRecipient(
+            key="request.created_by",
+            then_=[EmailRecipient(key="request.created_by")],
+            else_=[],
+        ),
     ]
 
     recipient_filters = [
+        # remove a possible email recipient
+        KeyRecipientFilter(key="request_event.created_by"),
         # do not send notification to user creating the comment
         UserRecipientFilter(key="request_event.created_by"),
         UserPreferencesRecipientFilter(),
