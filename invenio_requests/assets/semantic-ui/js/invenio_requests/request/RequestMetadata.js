@@ -1,5 +1,6 @@
 // This file is part of InvenioRequests
 // Copyright (C) 2022 CERN.
+// Copyright (C) 2024 Graz University of Technology.
 //
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
@@ -46,11 +47,20 @@ const ExternalEmail = ({ email }) => (
     </span>
   </div>
 );
+const Group = ({ group }) => (
+  <div className="flex">
+    <Icon name="group" className="mr-5" />
+    <span>
+      {i18next.t("Group")}: {group?.name}
+    </span>
+  </div>
+);
 
 const EntityDetails = ({ userData, details }) => {
   const isUser = "user" in userData;
   const isCommunity = "community" in userData;
   const isExternalEmail = "email" in userData;
+  const isGroup = "group" in userData;
 
   if (isUser) {
     return <User user={details} />;
@@ -58,6 +68,8 @@ const EntityDetails = ({ userData, details }) => {
     return <Community community={details} />;
   } else if (isExternalEmail) {
     return <ExternalEmail email={details} />;
+  } else if (isGroup) {
+    return <Group group={details} />;
   }
 };
 
