@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-08-06T08:57:02.744Z\n"
-"PO-Revision-Date: 2024-08-06T08:57:02.744Z\n"
+"POT-Creation-Date: 2024-10-22T14:36:20.664Z\n"
+"PO-Revision-Date: 2024-10-22T14:36:20.664Z\n"
 "Language: en\n"
 
 msgid "Save"
@@ -26,6 +26,9 @@ msgstr "Cancel"
 
 msgid "Cancel request"
 msgstr "Cancel request"
+
+msgid "Request access"
+msgstr "Request access"
 
 msgid "Something went wrong."
 msgstr "Something went wrong."
@@ -66,11 +69,35 @@ msgstr "Community inclusion"
 msgid "Member invitation"
 msgstr "Member invitation"
 
+msgid "Guest access"
+msgstr "Guest access"
+
+msgid "User access"
+msgstr "User access"
+
+msgid "Community manage record"
+msgstr "Community manage record"
+
+msgid "Subcommunity"
+msgstr "Subcommunity"
+
+msgid "Membership request"
+msgstr "Membership request"
+
 msgid "Add comment (optional)"
 msgstr "Add comment (optional)"
 
 msgid "{{action}} request"
 msgstr "{{action}} request"
+
+msgid "Anonymous user"
+msgstr "Anonymous user"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Group"
+msgstr "Group"
 
 msgid "Creator"
 msgstr "Creator"
@@ -89,6 +116,9 @@ msgstr "Created"
 
 msgid "Expires"
 msgstr "Expires"
+
+msgid "Record"
+msgstr "Record"
 
 msgid "Accept request"
 msgstr "Accept request"
@@ -155,6 +185,9 @@ msgstr "cancelled this request"
 msgid "unknown event"
 msgstr "unknown event"
 
+msgid "Actions"
+msgstr "Actions"
+
 msgid "Edit"
 msgstr "Edit"
 
@@ -163,36 +196,3 @@ msgstr "commented {{commentTime}}"
 
 msgid "Edited"
 msgstr "Edited"
-
-msgid "Request access"
-msgstr "Request access"
-
-msgid "Guest access"
-msgstr "Guest access"
-
-msgid "User access"
-msgstr "User access"
-
-msgid "Community manage record"
-msgstr "Community manage record"
-
-msgid "Subcommunity"
-msgstr "Subcommunity"
-
-msgid "Membership request"
-msgstr "Membership request"
-
-msgid "Anonymous user"
-msgstr "Anonymous user"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Group"
-msgstr "Group"
-
-msgid "Record"
-msgstr "Record"
-
-msgid "Actions"
-msgstr "Actions"
